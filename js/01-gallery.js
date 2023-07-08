@@ -21,29 +21,28 @@ const imagesListArr = galleryItems
 
 allGallery.insertAdjacentHTML("beforeend", imagesListArr);
 
-allGallery.addEventListener("click", showTitle);
+allGallery.addEventListener("click", onClick);
 
-function showTitle(evt) {
-baseSettings(evt);
-if(!evt.target.tagName === "IMG") {
-    return
+function onClick(evt) {
+evt.preventDefault();
+if (!evt.target.nodeName === "IMG") {
+    return;
 }
 const selectedImg = evt.target.dataset.source;
 
-const instance = basicLightbox.create(`
-    <img src="${selectedImg}" alt="">
-`);
+const instance = basicLightbox.create(`<img src="${selectedImg}" alt="">`, {
+onShow: (instance) => {
+    window.addEventListener("keydown", closeWithEsc);
+},
+onClose: (instance) => {
+    window.removeEventListener("keydown", closeWithEsc);
+},
+});
 instance.show();
-
-allGallery.addEventListener("keydown", closeWithEsc);
 
 function closeWithEsc(evt) {
 if(evt.code === "Escape") {
     instance.close();
 }
 }
-}
-
-function baseSettings(evt) {
-    evt.preventDefault();
 }

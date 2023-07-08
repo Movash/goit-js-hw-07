@@ -21,12 +21,6 @@ const imagesListArr = galleryItems
 
 allGallery.insertAdjacentHTML("beforeend", imagesListArr);
 
-allGallery.addEventListener("click", baseSettings);
-
-function baseSettings(evt) {
-  evt.preventDefault();
-}
-
 const lightbox = new SimpleLightbox(".gallery a", {
   captionsData: "alt",
   captionDelay: 250
